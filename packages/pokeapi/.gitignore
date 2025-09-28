@@ -1,0 +1,42 @@
+# ==> General
+# Miscellaneous editor files and logs
+*.log
+*~
+
+# ==> Operating System Files
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# ==> IDE / Editor Files
+# VS Code
+.vscode/
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# ==> Dart
+# Ignore Dart tool and package directories
+.dart_tool/
+.packages
+build/
+
+# IMPORTANT: The pubspec.lock file should NOT be ignored. 
+# It ensures that everyone on your team has the exact same package versions.
+
+# NOTE: Generated files from build_runner (*.g.dart, *.freezed.dart) are 
+# typically checked into git. If your team agrees to always generate them
+# locally, you can add them here.
+*.g.dart
+*.freezed.dart
+
+# ==> Secrets & Sensitive Information
+# Environment files containing API keys or other secrets
+.env*
+!/.env.example
