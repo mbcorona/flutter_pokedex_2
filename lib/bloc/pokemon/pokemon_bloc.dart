@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:pokeapi/data/api/pokeapi_impl.dart';
 import 'package:pokeapi/domain/api/pokeapi.dart';
-import 'package:pokeapi/domain/models/pokemon/pokemon.dart';
+import 'package:pokeapi/domain/models/pokemon/pokemon_details.dart';
 
 part 'pokemon_event.dart';
 part 'pokemon_state.dart';
@@ -13,7 +13,8 @@ class PokemonBloc extends Bloc<PokemonEvent, PokemonState> {
     on<_Load>(_onLoad);
   }
 
-  PokeApi _api;
+  final PokeApi _api;
+
   Future<void> _onLoad(_Load event, Emitter<PokemonState> emit) async {
     emit(const PokemonState.loading());
     try {

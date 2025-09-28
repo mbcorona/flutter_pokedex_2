@@ -21,9 +21,10 @@ class PokemonListView extends StatelessWidget {
               case Loading():
                 return PokemonLoader();
               case Loaded():
-                return PokemonsGrid(pokeList: state.pokeList);
+                final hasMore = (state.query == null || state.query!.isEmpty) && state.pokeList.next != null;
+                return PokemonsGrid(pokemons: state.pokemons, hasMore: hasMore);
               case Error():
-                return Text('Something went wrong, try again');
+                return Center(child: Text('Something went wrong, try again'));
               default:
                 return const SizedBox();
             }

@@ -11,9 +11,11 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
   PokedexBloc({PokeApi? api}) : _api = api ?? PokeApiImpl(), super(Initial()) {
     on<_Load>(_onLoad);
     on<_LoadMore>(_onLoadMore);
+    on<_Search>(_onSearch);
   }
 
   final PokeApi _api;
+  final int pageSize = 100;
   int page = 0;
   Future<void> _onLoad(_Load event, Emitter<PokedexState> emit) async {
     emit(const PokedexState.loading());
@@ -34,9 +36,17 @@ class PokedexBloc extends Bloc<PokedexEvent, PokedexState> {
         final newPokeLlist = await _api.getAll(page: page);
 
         emit(
-          PokedexState.loaded(pokeList: newPokeLlist.copyWith(results: [...pokeList.results, ...newPokeLlist.results])),
+          (state as Loaded).copyWith(
+            pokeList: newPokeLlist.copyWith(results: [...pokeList.results, ...newPokeLlist.results]),
+          ),
         );
       }
+    }
+  }
+
+  void _onSearch(_Search event, Emitter<PokedexState> emit) {
+    if (state is Loaded) {
+      emit((state as Loaded).copyWith(query: event.query));
     }
   }
 }

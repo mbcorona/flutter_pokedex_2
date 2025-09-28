@@ -55,12 +55,13 @@ extension PokedexEventPatterns on PokedexEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Load value)?  load,TResult Function( _LoadMore value)?  loadMore,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Load value)?  load,TResult Function( _LoadMore value)?  loadMore,TResult Function( _Search value)?  search,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Load() when load != null:
 return load(_that);case _LoadMore() when loadMore != null:
-return loadMore(_that);case _:
+return loadMore(_that);case _Search() when search != null:
+return search(_that);case _:
   return orElse();
 
 }
@@ -78,12 +79,13 @@ return loadMore(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Load value)  load,required TResult Function( _LoadMore value)  loadMore,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Load value)  load,required TResult Function( _LoadMore value)  loadMore,required TResult Function( _Search value)  search,}){
 final _that = this;
 switch (_that) {
 case _Load():
 return load(_that);case _LoadMore():
-return loadMore(_that);case _:
+return loadMore(_that);case _Search():
+return search(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +102,13 @@ return loadMore(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Load value)?  load,TResult? Function( _LoadMore value)?  loadMore,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Load value)?  load,TResult? Function( _LoadMore value)?  loadMore,TResult? Function( _Search value)?  search,}){
 final _that = this;
 switch (_that) {
 case _Load() when load != null:
 return load(_that);case _LoadMore() when loadMore != null:
-return loadMore(_that);case _:
+return loadMore(_that);case _Search() when search != null:
+return search(_that);case _:
   return null;
 
 }
@@ -122,11 +125,12 @@ return loadMore(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  load,TResult Function()?  loadMore,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  load,TResult Function()?  loadMore,TResult Function( String query)?  search,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Load() when load != null:
 return load();case _LoadMore() when loadMore != null:
-return loadMore();case _:
+return loadMore();case _Search() when search != null:
+return search(_that.query);case _:
   return orElse();
 
 }
@@ -144,11 +148,12 @@ return loadMore();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  load,required TResult Function()  loadMore,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  load,required TResult Function()  loadMore,required TResult Function( String query)  search,}) {final _that = this;
 switch (_that) {
 case _Load():
 return load();case _LoadMore():
-return loadMore();case _:
+return loadMore();case _Search():
+return search(_that.query);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +170,12 @@ return loadMore();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  load,TResult? Function()?  loadMore,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  load,TResult? Function()?  loadMore,TResult? Function( String query)?  search,}) {final _that = this;
 switch (_that) {
 case _Load() when load != null:
 return load();case _LoadMore() when loadMore != null:
-return loadMore();case _:
+return loadMore();case _Search() when search != null:
+return search(_that.query);case _:
   return null;
 
 }
@@ -240,6 +246,72 @@ String toString() {
 
 
 
+
+/// @nodoc
+
+
+class _Search implements PokedexEvent {
+  const _Search(this.query);
+  
+
+ final  String query;
+
+/// Create a copy of PokedexEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SearchCopyWith<_Search> get copyWith => __$SearchCopyWithImpl<_Search>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Search&&(identical(other.query, query) || other.query == query));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,query);
+
+@override
+String toString() {
+  return 'PokedexEvent.search(query: $query)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$SearchCopyWith<$Res> implements $PokedexEventCopyWith<$Res> {
+  factory _$SearchCopyWith(_Search value, $Res Function(_Search) _then) = __$SearchCopyWithImpl;
+@useResult
+$Res call({
+ String query
+});
+
+
+
+
+}
+/// @nodoc
+class __$SearchCopyWithImpl<$Res>
+    implements _$SearchCopyWith<$Res> {
+  __$SearchCopyWithImpl(this._self, this._then);
+
+  final _Search _self;
+  final $Res Function(_Search) _then;
+
+/// Create a copy of PokedexEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? query = null,}) {
+  return _then(_Search(
+null == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
 
 /// @nodoc
 mixin _$PokedexState {
@@ -358,12 +430,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( PokeList<Pokemon> pokeList)?  loaded,TResult Function()?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( PokeList<Pokemon> pokeList,  String? query)?  loaded,TResult Function()?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Loaded() when loaded != null:
-return loaded(_that.pokeList);case Error() when error != null:
+return loaded(_that.pokeList,_that.query);case Error() when error != null:
 return error();case _:
   return orElse();
 
@@ -382,12 +454,12 @@ return error();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( PokeList<Pokemon> pokeList)  loaded,required TResult Function()  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( PokeList<Pokemon> pokeList,  String? query)  loaded,required TResult Function()  error,}) {final _that = this;
 switch (_that) {
 case Initial():
 return initial();case Loading():
 return loading();case Loaded():
-return loaded(_that.pokeList);case Error():
+return loaded(_that.pokeList,_that.query);case Error():
 return error();case _:
   throw StateError('Unexpected subclass');
 
@@ -405,12 +477,12 @@ return error();case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( PokeList<Pokemon> pokeList)?  loaded,TResult? Function()?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( PokeList<Pokemon> pokeList,  String? query)?  loaded,TResult? Function()?  error,}) {final _that = this;
 switch (_that) {
 case Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Loaded() when loaded != null:
-return loaded(_that.pokeList);case Error() when error != null:
+return loaded(_that.pokeList,_that.query);case Error() when error != null:
 return error();case _:
   return null;
 
@@ -487,10 +559,11 @@ String toString() {
 
 
 class Loaded implements PokedexState {
-  const Loaded({required this.pokeList});
+  const Loaded({required this.pokeList, this.query});
   
 
  final  PokeList<Pokemon> pokeList;
+ final  String? query;
 
 /// Create a copy of PokedexState
 /// with the given fields replaced by the non-null parameter values.
@@ -502,16 +575,16 @@ $LoadedCopyWith<Loaded> get copyWith => _$LoadedCopyWithImpl<Loaded>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&(identical(other.pokeList, pokeList) || other.pokeList == pokeList));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Loaded&&(identical(other.pokeList, pokeList) || other.pokeList == pokeList)&&(identical(other.query, query) || other.query == query));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,pokeList);
+int get hashCode => Object.hash(runtimeType,pokeList,query);
 
 @override
 String toString() {
-  return 'PokedexState.loaded(pokeList: $pokeList)';
+  return 'PokedexState.loaded(pokeList: $pokeList, query: $query)';
 }
 
 
@@ -522,7 +595,7 @@ abstract mixin class $LoadedCopyWith<$Res> implements $PokedexStateCopyWith<$Res
   factory $LoadedCopyWith(Loaded value, $Res Function(Loaded) _then) = _$LoadedCopyWithImpl;
 @useResult
 $Res call({
- PokeList<Pokemon> pokeList
+ PokeList<Pokemon> pokeList, String? query
 });
 
 
@@ -539,10 +612,11 @@ class _$LoadedCopyWithImpl<$Res>
 
 /// Create a copy of PokedexState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? pokeList = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? pokeList = null,Object? query = freezed,}) {
   return _then(Loaded(
 pokeList: null == pokeList ? _self.pokeList : pokeList // ignore: cast_nullable_to_non_nullable
-as PokeList<Pokemon>,
+as PokeList<Pokemon>,query: freezed == query ? _self.query : query // ignore: cast_nullable_to_non_nullable
+as String?,
   ));
 }
 

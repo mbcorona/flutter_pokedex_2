@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:pokeapi/domain/domain.dart';
+import 'package:pokeapi/domain/models/pokemon/pokemon_details.dart';
 
 class PokeApiImpl implements PokeApi {
   final Dio _dio;
 
   PokeApiImpl({Dio? dio}) : _dio = dio ?? Dio();
   static const String baseUrl = 'https://pokeapi.co/api/v2';
-  static const size = 20;
 
   @override
-  Future<PokeList<Pokemon>> getAll({int page = 0}) async {
+  Future<PokeList<Pokemon>> getAll({int page = 0, int pageSize = 20}) async {
     final path = '/pokemon';
     try {
-      final response = await _dio.get('$baseUrl$path?limit=$size&offset=${size * page}');
+      final response = await _dio.get('$baseUrl$path?limit=$pageSize&offset=${pageSize * page}');
       if (response.statusCode == 200) {
         final pokelist = PokeList<Pokemon>.fromJson(
           response.data,

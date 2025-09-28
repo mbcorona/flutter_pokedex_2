@@ -7,7 +7,6 @@ class PokedexBackground extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    print('AYEEE');
     return Stack(
       children: [
         // Red / White Backgrond
