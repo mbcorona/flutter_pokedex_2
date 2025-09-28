@@ -6,9 +6,9 @@ part 'pokemon.freezed.dart';
 @freezed
 abstract class Pokemon with _$Pokemon {
   const factory Pokemon({
-    required int id,
     required String name,
     required String url,
+    PokemonDetails? details,
   }) = _Pokemon;
 
   factory Pokemon.fromJson(Map<String, Object?> json) => _$PokemonFromJson(json);
