@@ -5,7 +5,7 @@ import 'package:flutter_pokedex_2/bloc/selected_pokemon/selected_pokemon_cubit.d
 import 'package:flutter_pokedex_2/constants.dart';
 import 'package:flutter_pokedex_2/pages/pokedex/widgets/pokemon_details/stat_bar_chart.dart';
 import 'package:flutter_pokedex_2/utils.dart';
-import 'package:flutter_pokedex_2/widgets/favorite_button.dart';
+import 'package:flutter_pokedex_2/widgets/pokemon_favorite_button.dart';
 import 'package:pokeapi/domain/models/models.dart';
 
 class PokemonDetailsView extends StatelessWidget {
@@ -37,7 +37,7 @@ class PokemonDetailsView extends StatelessWidget {
                         ),
                         Text(pokemon.name.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold)),
                         Text('#${pokemon.id.padLeft(4, '0')}'),
-                        FavoriteButton(onTap: () {}, isFavorite: false),
+                        PokemonFavoriteButton(pokemon: pokemon),
                       ],
                     ),
                     Image.network(pokemon.image, height: 200),

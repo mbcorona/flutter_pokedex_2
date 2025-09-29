@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pokedex_2/bloc/selected_pokemon/selected_pokemon_cubit.dart';
-import 'package:flutter_pokedex_2/widgets/favorite_button.dart';
+import 'package:flutter_pokedex_2/widgets/pokemon_favorite_button.dart';
 import 'package:pokeapi/domain/models/models.dart' hide PokemonDetails;
 
 class PokemonCard extends StatelessWidget {
@@ -27,7 +27,7 @@ class PokemonCard extends StatelessWidget {
                   Text(pokemon.id.padLeft(4, '0'), style: TextStyle(color: Colors.grey)),
                 ],
               ),
-              Positioned(top: 0, right: 0, child: FavoriteButton(onTap: () {}, isFavorite: false)),
+              Positioned(top: 0, right: 0, child: PokemonFavoriteButton(pokemon: pokemon)),
             ],
           ),
         ),

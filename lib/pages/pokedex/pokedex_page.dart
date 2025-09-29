@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_pokedex_2/bloc/poke_favorites/poke_favorites_bloc.dart';
 import 'package:flutter_pokedex_2/bloc/selected_pokemon/selected_pokemon_cubit.dart';
 import 'package:flutter_pokedex_2/constants.dart';
 import 'package:flutter_pokedex_2/pages/pokedex/widgets/pokemon_details/pokemon_details_view.dart';
 import 'package:flutter_pokedex_2/pages/pokedex/widgets/pokedex_background.dart';
-import 'package:flutter_pokedex_2/pages/pokedex/widgets/pokemon_list_view.dart';
+import 'package:flutter_pokedex_2/pages/pokedex/widgets/pokemons_view.dart';
 import 'package:pokeapi/domain/models/models.dart';
 
 class PokedexPage extends StatelessWidget {
@@ -13,8 +14,11 @@ class PokedexPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    return BlocProvider(
-      create: (context) => SelectedPokemonCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => SelectedPokemonCubit()),
+        BlocProvider(create: (context) => PokeFavoritesBloc()),
+      ],
       child: Scaffold(
         backgroundColor: kRedColor,
         body: BlocBuilder<SelectedPokemonCubit, Pokemon?>(
@@ -35,15 +39,16 @@ class PokedexPage extends StatelessWidget {
                     bottom: 0,
                     child: const PokedexBackground(),
                   ),
+                  // Pokemons View
                   IgnorePointer(
                     ignoring: detailsMode ? true : false,
                     child: AnimatedOpacity(
                       opacity: detailsMode ? 0 : 1,
                       duration: kAnimationDuration,
-                      child: PokemonListView(),
+                      child: PokemonsView(),
                     ),
                   ),
-
+                  // Pokemon Details View
                   IgnorePointer(
                     ignoring: detailsMode ? false : true,
                     child: AnimatedOpacity(
