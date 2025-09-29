@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pokedex_2/constants.dart';
 import 'package:flutter_pokedex_2/pages/pokedex/all_pokemons_grid.dart';
-import 'package:flutter_pokedex_2/pages/pokedex/widgets/favorite_pokemons_grid.dart';
+import 'package:flutter_pokedex_2/pages/pokedex/favorite_pokemons_grid.dart';
 
 class PokemonsView extends StatelessWidget {
   const PokemonsView({super.key});
