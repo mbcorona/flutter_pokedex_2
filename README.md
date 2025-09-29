@@ -49,7 +49,7 @@ The project's architecture is organized into two main parts: the application mod
 1.  **Clone the repository:**
     ```sh
     git clone <your-repo-url>
-    cd pokedex-flutter-app
+    cd flutter_pokedex_2
     ```
 
 2.  **Install dependencies:**
