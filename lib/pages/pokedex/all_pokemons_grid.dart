@@ -20,8 +20,8 @@ class _AllPokemonsGridState extends State<AllPokemonsGrid> with AutomaticKeepAli
       child: BlocBuilder<PokemonsBloc, PokemonsState>(
         builder: (context, state) {
           switch (state) {
-            case PokemonsState.initial:
-            case PokemonsState.loading:
+            case Initial():
+            case Loading():
               return PokemonLoader();
             case Loaded():
               final pokemons = state.pokemons;

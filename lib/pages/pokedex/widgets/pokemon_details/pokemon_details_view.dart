@@ -19,56 +19,63 @@ class PokemonDetailsView extends StatelessWidget {
         if (pokemon == null) {
           return const SizedBox.shrink();
         }
-        return SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: kPadding * 1.2, right: kPadding / 4),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        BackButton(
-                          onPressed: () {
-                            context.read<SelectedPokemonCubit>().clear();
-                          },
-                        ),
-                        Text(pokemon.name.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text('#${pokemon.id.padLeft(4, '0')}'),
-                        PokemonFavoriteButton(pokemon: pokemon),
-                      ],
-                    ),
-                    Image.network(pokemon.image, height: 200),
-                  ],
+        return GestureDetector(
+          onHorizontalDragEnd: (details) {
+            if (details.primaryVelocity != null && details.primaryVelocity! > 0) {
+              context.read<SelectedPokemonCubit>().clear();
+            }
+          },
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: kPadding * 1.2, right: kPadding / 4),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          BackButton(
+                            onPressed: () {
+                              context.read<SelectedPokemonCubit>().clear();
+                            },
+                          ),
+                          Text(pokemon.name.toUpperCase(), style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text('#${pokemon.id.padLeft(4, '0')}'),
+                          PokemonFavoriteButton(pokemon: pokemon),
+                        ],
+                      ),
+                      Image.network(pokemon.image, height: 200),
+                    ],
+                  ),
                 ),
-              ),
-              BlocProvider(
-                create: (context) => PokemonBloc()..add(PokemonEvent.load(pokemon.id)),
-                child: Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: kPadding * 2, right: kPadding / 4),
-                    child: BlocBuilder<PokemonBloc, PokemonState>(
-                      builder: (context, state) {
-                        switch (state) {
-                          case Initial():
-                          case Loading():
-                            return const Center(child: CircularProgressIndicator(color: kRedColor));
-                          case Loaded():
-                            final details = state.pokemon;
-                            return _details(details);
-                          case Error():
-                            return const Center(child: Text('Something went wrong'));
-                          default:
-                            return const SizedBox.shrink();
-                        }
-                      },
+                BlocProvider(
+                  create: (context) => PokemonBloc()..add(PokemonEvent.load(pokemon.id)),
+                  child: Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: kPadding * 2, right: kPadding / 4),
+                      child: BlocBuilder<PokemonBloc, PokemonState>(
+                        builder: (context, state) {
+                          switch (state) {
+                            case Initial():
+                            case Loading():
+                              return const Center(child: CircularProgressIndicator(color: kRedColor));
+                            case Loaded():
+                              final details = state.pokemon;
+                              return _details(details);
+                            case Error():
+                              return const Center(child: Text('Something went wrong'));
+                            default:
+                              return const SizedBox.shrink();
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
